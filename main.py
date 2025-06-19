@@ -102,6 +102,7 @@ class ModernChatUI:
             borderwidth=0,
             highlightthickness=0
         )
+        self.chat_display['yscrollcommand'] = None
         self.chat_display.pack(expand=True, fill=tk.BOTH)
         
         # Custom tags for message styling
@@ -198,16 +199,14 @@ class ModernChatUI:
         return f"#{r:02x}{g:02x}{b:02x}"
     
     def add_scrollbar_style(self):
-        """Customize scrollbar appearance"""
-        self.style.configure("Vertical.TScrollbar",
-                           background=self.bg_color,
-                           troughcolor=self.bg_color,
-                           bordercolor=self.bg_color,
-                           arrowcolor=self.text_color,
-                           gripcount=0)
-        
-        # Apply to chat display
-        self.chat_display.configure(yscrollcommand=lambda *args: self.chat_display.yview(*args))
+        self.style.configure("Vertical.TScrollbar", background=self.bg_color, troughcolor=self.bg_color, bordercolor=self.bg_color, arrowcolor=self.text_color, gripcount=0)
+    
+    # Apply to chat display - this is the correct way to link scrollbar and text widget
+        scrollbar = ttk.Scrollbar(self.chat_frame, style="Vertical.TScrollbar")
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.chat_display.configure(yscrollcommand=scrollbar.set)
+        scrollbar.configure(command=self.chat_display.yview)
+
         
     def on_close(self):
         """Handle window close"""
