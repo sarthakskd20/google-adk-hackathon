@@ -8,6 +8,7 @@ from .subagents.legal_foundation_guide import legal_foundation_guide_agent
 from .subagents.market_insight_strategist import market_insight_strategist_agent
 from .subagents.startup_execution_roadmap_planner import startup_execution_roadmap_planner_agent
 from .subagents.personalized_financial_architect import personalized_financial_architect_agent
+from .subagents.greeting_subagent import greeting_user_agent
 
 MODEL = "gemini-2.5-pro-preview-05-06"
 
@@ -25,6 +26,7 @@ startup_mentor = LlmAgent(
     ),
     # The order here defines the workflow: first initial analysis, then planning.
     tools=[
+        AgentTool(agent=greeting_user_agent),  # Initial greeting sub-agent
         AgentTool(agent=startup_execution_roadmap_planner_agent),
         AgentTool(agent=legal_foundation_guide_agent),
         AgentTool(agent=market_insight_strategist_agent),
