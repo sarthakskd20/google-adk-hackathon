@@ -53,7 +53,3 @@ python main.py
 ```
 
 Once this is done, your agent will start and launch with the proper user interface. You're ready to go! 🎉
-
----
-
-Let me know if you'd like me to insert this into your existing GitHub `README.md` file or modify it for Mac/Linux support too.
