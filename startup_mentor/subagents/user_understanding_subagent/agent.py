@@ -3,7 +3,7 @@ from google.adk.tools.tool_context import ToolContext
 from google.adk.agents import LlmAgent
 from . import prompt
 
-MODEL = "gemini-2.5-flash"
+MODEL = "gemini-2.5-pro"
 
 def validate_response(min_length=3, contains_digits=False):
     def validator(text):
@@ -19,7 +19,6 @@ def validate_response(min_length=3, contains_digits=False):
 def create_tool_wrapper(func):
     async def wrapper(tool_context: ToolContext, user_input: str):
         result = func(tool_context, user_input)
-        # State is automatically persisted through tool_context.state
         return result
     return wrapper
 
