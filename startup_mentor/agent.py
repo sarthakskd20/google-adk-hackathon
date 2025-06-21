@@ -13,6 +13,7 @@ from .subagents.personalized_financial_architect import personalized_financial_a
 from .subagents.startup_execution_roadmap_planner import startup_execution_roadmap_planner_agent
 from .subagents.idea_validation_engine import idea_validation_engine_agent
 from .subagents.tech_stack_advisor import tech_stack_advisor_agent
+from .subagents.current_opportunity_finder import current_opportunity_finder_agent
 
 def is_user_profile_complete(state: dict) -> bool:
     required_fields = [
@@ -38,6 +39,7 @@ startup_llm_mentor_agent = LlmAgent(
     tools=[
         AgentTool(agent=startup_execution_roadmap_planner_agent),
         AgentTool(agent=market_insight_strategist_agent),
+        AgentTool(agent=current_opportunity_finder_agent),
         AgentTool(agent=legal_foundation_guide_agent),
         AgentTool(agent=personalized_financial_architect_agent),
         AgentTool(agent=idea_validation_engine_agent),
