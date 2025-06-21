@@ -1,6 +1,11 @@
 from datetime import datetime
 from google.genai import types
-from typing import Dict, Any
+from typing import Dict, Any, Optional, Tuple
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # ANSI color codes for terminal output
 class Colors:
@@ -27,7 +32,6 @@ def format_state_field(value: Any, default: str = 'Not specified') -> str:
         return default
     return str(value)
 
-# --- Display Session State ---
 def display_state(session_state: Dict[str, Any], label: str = "Current State") -> None:
     """Display the current session state in a formatted way."""
     try:
@@ -56,74 +60,67 @@ def display_state(session_state: Dict[str, Any], label: str = "Current State") -
         
         print(f"\n{'=' * 30}\n")
     except Exception as e:
+        logger.error(f"Error displaying state: {e}")
         print(f"{Colors.RED}Error displaying state: {e}{Colors.RESET}")
 
-# --- Async Call and Agent Event Processing ---
-async def process_agent_response(event) -> str:
+async def process_agent_response(event) -> Optional[str]:
     """Process and display agent response events."""
     final_response = None
     
     try:
+        # Skip processing if it's a system event
+        if event.author == "system":
+            return None
+
         # Log basic event info
-        print(f"{Colors.MAGENTA}Event ID: {event.id}, Author: {event.author}{Colors.RESET}")
+        logger.debug(f"Processing event from {event.author}")
 
         # Process all parts of the event
         if event.content and event.content.parts:
             for part in event.content.parts:
                 if hasattr(part, "executable_code") and part.executable_code:
-                    print(
-                        f"{Colors.YELLOW}  Debug: Agent generated code:\n```python\n{part.executable_code.code}\n```{Colors.RESET}"
-                    )
+                    logger.debug(f"Agent generated code: {part.executable_code.code}")
                 elif hasattr(part, "code_execution_result") and part.code_execution_result:
-                    print(
-                        f"{Colors.YELLOW}  Debug: Code Execution Result: {part.code_execution_result.outcome} - Output:\n{part.code_execution_result.output}{Colors.RESET}"
-                    )
+                    logger.debug(f"Code Execution Result: {part.code_execution_result.outcome}")
                 elif hasattr(part, "tool_response") and part.tool_response:
-                    print(f"{Colors.BLUE}  Tool Response: {part.tool_response.output}{Colors.RESET}")
+                    logger.debug(f"Tool Response: {part.tool_response.output}")
                 elif hasattr(part, "text") and part.text and part.text.strip():
-                    print(f"{Colors.GREEN}  Text: '{part.text.strip()}'{Colors.RESET}")
                     if event.is_final_response():
                         final_response = part.text.strip()
+                        logger.info(f"Final response from {event.author}: {final_response}")
+                    else:
+                        logger.info(f"Intermediate response: {part.text.strip()}")
 
         # Special formatting for final response
-        if event.is_final_response() and final_response:
-            print(
-                f"\n{Colors.BG_BLUE}{Colors.WHITE}{Colors.BOLD}╔══ AGENT RESPONSE ═════════════════════════════════════════{Colors.RESET}"
-            )
-            print(f"{Colors.CYAN}{Colors.BOLD}{final_response}{Colors.RESET}")
-            print(
-                f"{Colors.BG_BLUE}{Colors.WHITE}{Colors.BOLD}╚═════════════════════════════════════════════════════════════{Colors.RESET}\n"
-            )
-        elif event.is_final_response() and not final_response:
-            print(
-                f"\n{Colors.BG_RED}{Colors.WHITE}{Colors.BOLD}==> Final Agent Response: [No text content in final event]{Colors.RESET}\n"
-            )
+        if event.is_final_response():
+            if final_response:
+                print(f"\n{Colors.CYAN}{Colors.BOLD}=== AGENT RESPONSE ==={Colors.RESET}")
+                print(f"{final_response}")
+                print(f"{Colors.CYAN}{Colors.BOLD}====================={Colors.RESET}\n")
+            else:
+                logger.warning("Final response event had no text content")
 
     except Exception as e:
+        logger.error(f"Error processing agent response: {e}")
         print(f"{Colors.RED}Error processing agent response: {e}{Colors.RESET}")
     
     return final_response
 
-async def call_agent_async(runner, user_id: str, session_id: str, query: str) -> tuple:
-    """Execute an agent call asynchronously and return the final response."""
+async def call_agent_async(runner, user_id: str, session_id: str, query: str) -> Tuple[Optional[str], Dict[str, Any]]:
+    """Execute an agent call asynchronously and return the final response and state."""
     content = types.Content(role="user", parts=[types.Part(text=query)])
     final_response_text = None
+    session_state = {}
     
-    print(
-        f"\n{Colors.BG_BLUE}{Colors.BLACK}{Colors.BOLD}--- Running Query: {query} ---{Colors.RESET}"
-    )
+    logger.info(f"Running query: {query}")
     
     try:
-        # Get initial state
+        # Get session
         session = runner.session_service.get_session(
             app_name=runner.app_name,
             user_id=user_id,
             session_id=session_id
         )
-        display_state(session.state, "State BEFORE processing")
-        
-        # Create a list to collect all events
-        events = []
         
         # Process agent events
         async for event in runner.run_async(
@@ -131,32 +128,28 @@ async def call_agent_async(runner, user_id: str, session_id: str, query: str) ->
             session_id=session_id,
             new_message=content
         ):
-            events.append(event)  # Collect all events
             response = await process_agent_response(event)
             if response:
                 final_response_text = response
         
-        # After processing all events, force a session refresh
+        # Get updated state
         session = runner.session_service.get_session(
             app_name=runner.app_name,
             user_id=user_id,
-            session_id=session_id,
-            # force_refresh=True  # Ensure we get the latest state
+            session_id=session_id
         )
+        session_state = session.state.copy()
         
-        # Debug: Print raw state to see what's actually there
-        print(f"\n{Colors.YELLOW}DEBUG - Raw State:{Colors.RESET}")
-        for key, value in session.state.items():
-            print(f"{key}: {value}")
-        
-        display_state(session.state, "State AFTER processing")
+        # Log missing fields if any
+        missing_fields = get_missing_profile_fields(session_state)
+        if missing_fields:
+            logger.info(f"Still missing fields: {missing_fields}")
         
     except Exception as e:
-        print(f"{Colors.RED}Error during agent call: {e}{Colors.RESET}")
+        logger.error(f"Error during agent call: {e}")
     
-    return final_response_text, None
+    return final_response_text, session_state
 
-# --- Profile Completion Checker ---
 def is_user_profile_complete(state: Dict[str, Any]) -> bool:
     """Check if all required profile fields are filled."""
     required_fields = [
@@ -172,4 +165,27 @@ def is_user_profile_complete(state: Dict[str, Any]) -> bool:
         "user_challenges",
         "user_mindset",
     ]
-    return all(state.get(field) for field in required_fields)
+    
+    # Detailed check with logging
+    missing_fields = [field for field in required_fields if not state.get(field)]
+    if missing_fields:
+        logger.info(f"Missing profile fields: {missing_fields}")
+        return False
+    return True
+
+def get_missing_profile_fields(state: Dict[str, Any]) -> list:
+    """Get a list of missing required profile fields."""
+    required_fields = [
+        "user_name",
+        "user_age",
+        "user_location",
+        "user_background",
+        "user_financial_background",
+        "user_responsibilities",
+        "user_goals",
+        "user_startup_dream",
+        "user_available_time",
+        "user_challenges",
+        "user_mindset",
+    ]
+    return [field for field in required_fields if not state.get(field)]
