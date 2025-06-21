@@ -9,11 +9,11 @@ from PIL import Image, ImageTk
 import sv_ttk  # Modern theme for tkinter
 
 # Import the main customer service agent
-from startup_mentor.agent import startup_mentor
+from startup_mentor.agent import startup_mentor_orchestrator
 from dotenv import load_dotenv
 from google.adk.runners import Runner
 from google.adk.sessions import DatabaseSessionService
-from utils import call_agent_async
+from utils import call_agent_async, get_missing_profile_fields
 
 load_dotenv()
 
@@ -557,24 +557,33 @@ class ModernChatUI:
             self.on_close()
             return
             
-        # Get agent response
         try:
-            response, agent_name = await call_agent_async(
+            # Get agent response
+            response, new_state = await call_agent_async(
                 runner, 
                 "28475935", 
                 self.current_backend_session.id, 
                 user_input
             )
-            self.hide_typing_indicator()
-            self.add_message("agent", response)
-            self.update_status("Ready")
             
+            self.hide_typing_indicator()
+            
+            # Only show the response if it's not a system message
+            if response and not response.startswith(("USER_", "AGE_", "LOCATION_")):
+                self.add_message("agent", response)
+                
+            # Update status based on missing fields
+            missing_fields = get_missing_profile_fields(new_state)
+            if missing_fields:
+                self.update_status(f"Please provide: {', '.join(missing_fields)}")
+            else:
+                self.update_status("Ready to discuss your startup!")
+                
         except Exception as e:
             self.hide_typing_indicator()
             self.add_message("system", f"Error: {str(e)}")
             self.update_status(f"Error: {str(e)}")
         finally:
-            # Re-enable input
             self.root.after(0, lambda: [
                 self.input_entry.config(state=tk.NORMAL),
                 self.update_send_button_state(),
@@ -609,7 +618,7 @@ def main():
         )
         global runner
         runner = Runner(
-            agent=startup_mentor,
+            agent=startup_mentor_orchestrator,
             app_name="Startup Mentor",
             session_service=session_service,
         )
