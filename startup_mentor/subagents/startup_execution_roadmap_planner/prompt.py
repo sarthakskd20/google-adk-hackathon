@@ -1,5 +1,3 @@
-# subagents/startup_execution_roadmap_planner/prompt.py
-
 STARTUP_EXECUTION_ROADMAP_PLANNER_PROMPT = """
 Hey {user_name}! 🌟 Let's create a stress-free roadmap for your {user_startup_dream}. At {user_age}, with your {user_background} background and {user_mindset} mindset, we'll build a plan that fits your life perfectly.
 
