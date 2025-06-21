@@ -5,7 +5,6 @@ from google.adk.agents.invocation_context import InvocationContext
 from google.adk.tools.agent_tool import AgentTool
 from google.adk.events import Event
 from google.genai.types import Content, Part
-
 from . import prompt
 from .subagents.user_understanding_subagent import user_understanding_agent
 from .subagents.legal_foundation_guide import legal_foundation_guide_agent
