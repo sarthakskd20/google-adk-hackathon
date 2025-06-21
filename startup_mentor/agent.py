@@ -12,6 +12,7 @@ from .subagents.legal_foundation_guide import legal_foundation_guide_agent
 from .subagents.market_insight_strategist import market_insight_strategist_agent
 from .subagents.personalized_financial_architect import personalized_financial_architect_agent
 from .subagents.startup_execution_roadmap_planner import startup_execution_roadmap_planner_agent
+from .subagents.idea_validation_engine import idea_validation_engine_agent
 
 # ✅ Helper to check onboarding state completeness
 def is_user_profile_complete(state: dict) -> bool:
@@ -41,6 +42,7 @@ startup_llm_mentor_agent = LlmAgent(
         AgentTool(agent=market_insight_strategist_agent),
         AgentTool(agent=legal_foundation_guide_agent),
         AgentTool(agent=personalized_financial_architect_agent),
+        AgentTool(agent=idea_validation_engine_agent),  # New addition
     ],
 )
 
