@@ -33,7 +33,7 @@ def is_user_profile_complete(state: dict) -> bool:
 
 startup_llm_mentor_agent = LlmAgent(
     name="startup_llm_mentor",
-    model="gemini-2.5-pro",
+    model="gemini-2.5-flash",
     instruction=prompt.STARTUP_MENTOR_MAIN_PROMPT,
     description="Provides personalized startup mentorship.",
     tools=[
