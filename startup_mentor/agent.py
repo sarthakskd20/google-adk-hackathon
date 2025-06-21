@@ -23,17 +23,15 @@ def is_user_profile_complete(state: dict) -> bool:
         "user_background",
         "user_financial_background",
         "user_responsibilities",
-        "user_goals",
         "user_startup_dream",
-        "user_available_time",
         "user_challenges",
-        "user_mindset",
+        "user_available_time",
     ]
     return all(state.get(field) for field in required_fields)
 
 startup_llm_mentor_agent = LlmAgent(
     name="startup_llm_mentor",
-    model="gemini-2.5-pro-preview-05-06",
+    model="gemini-2.5-pro",
     instruction=prompt.STARTUP_MENTOR_MAIN_PROMPT,
     description="Provides personalized startup mentorship.",
     tools=[
@@ -44,6 +42,7 @@ startup_llm_mentor_agent = LlmAgent(
         AgentTool(agent=personalized_financial_architect_agent),
         AgentTool(agent=idea_validation_engine_agent),
         AgentTool(agent=tech_stack_advisor_agent),
+        AgentTool(agent=current_opportunity_finder_agent),
     ],
 )
 
@@ -93,7 +92,7 @@ class StartupMentorOrchestrator(BaseAgent):
                     author="agent",
                     content=Content(
                         role="model",
-                        parts=[Part(text="✅ Great! Now that I understand you better, let's work on your startup plan!")]
+                        parts=[Part(text="✅ Great! Now that I understand you better, let's work on your tentative startup plan! If you have any plan or any good or try sending me any tentative plan so that we could get at some point of discussion.")]
                     )
                 )
             else:
