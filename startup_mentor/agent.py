@@ -15,7 +15,6 @@ from .subagents.startup_execution_roadmap_planner import startup_execution_roadm
 from .subagents.idea_validation_engine import idea_validation_engine_agent
 from .subagents.tech_stack_advisor import tech_stack_advisor_agent
 
-# ✅ Helper to check onboarding state completeness
 def is_user_profile_complete(state: dict) -> bool:
     required_fields = [
         "user_name",
@@ -32,10 +31,9 @@ def is_user_profile_complete(state: dict) -> bool:
     ]
     return all(state.get(field) for field in required_fields)
 
-# ✅ Startup mentorship LLM agent
 startup_llm_mentor_agent = LlmAgent(
     name="startup_llm_mentor",
-    model="gemini-2.0-flash",
+    model="gemini-2.5-pro",
     instruction=prompt.STARTUP_MENTOR_MAIN_PROMPT,
     description="Provides personalized startup mentorship.",
     tools=[
@@ -48,17 +46,7 @@ startup_llm_mentor_agent = LlmAgent(
     ],
 )
 
-# ✅ Custom Orchestrator Agent
 class StartupMentorOrchestrator(BaseAgent):
-    """
-    Custom agent for startup mentorship workflow.
-    
-    This agent orchestrates the user onboarding and startup mentorship process,
-    ensuring proper coordination between the user understanding agent and the
-    startup mentor agent.
-    """
-    
-    # Field declarations
     user_understanding_agent: BaseAgent
     startup_mentor_agent: LlmAgent
     
@@ -68,15 +56,6 @@ class StartupMentorOrchestrator(BaseAgent):
         user_understanding_agent: BaseAgent,
         startup_mentor_agent: LlmAgent,
     ):
-        """
-        Initializes the StartupMentorOrchestrator.
-        
-        Args:
-            name: The name of the agent.
-            user_understanding_agent: The agent for user onboarding.
-            startup_mentor_agent: The agent for startup mentorship.
-        """
-        # Define the sub_agents list for the framework
         sub_agents_list = [
             user_understanding_agent,
             startup_mentor_agent,
@@ -88,15 +67,13 @@ class StartupMentorOrchestrator(BaseAgent):
             startup_mentor_agent=startup_mentor_agent,
             sub_agents=sub_agents_list,
         )
-        self._has_displayed_welcome = False  # Track if welcome message was shown
+        self._has_displayed_welcome = False  
 
     @override
     async def _run_async_impl(self, ctx: InvocationContext) -> AsyncGenerator:
         state = ctx.session.state
 
-        # Phase 1: Check if profile is incomplete
         if not is_user_profile_complete(state):
-            # Only show welcome message if it hasn't been shown yet
             if not self._has_displayed_welcome:
                 yield Event(
                     author="agent",
@@ -107,13 +84,9 @@ class StartupMentorOrchestrator(BaseAgent):
                 )
                 self._has_displayed_welcome = True
 
-            # Delegate COMPLETELY to onboarding agent
             async for event in self.user_understanding_agent.run_async(ctx):
                 yield event
-                # Update state after each event
                 state = ctx.session.state
-
-            # After onboarding completes, check if we can proceed
             if is_user_profile_complete(state):
                 yield Event(
                     author="agent",
@@ -123,15 +96,12 @@ class StartupMentorOrchestrator(BaseAgent):
                     )
                 )
             else:
-                # If still incomplete, let the user continue the conversation
                 return
 
-        # Phase 2: Profile complete, continue with mentorship
         if is_user_profile_complete(state):
             async for event in self.startup_mentor_agent.run_async(ctx):
                 yield event
 
-# Create the custom orchestrator agent instance
 startup_mentor_orchestrator = StartupMentorOrchestrator(
     name="startup_mentor_orchestrator",
     user_understanding_agent=user_understanding_agent,
