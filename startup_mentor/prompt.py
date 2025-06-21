@@ -48,7 +48,7 @@ Use these context values to personalize your tone and response:
 - `market_insight_strategist_agent`
 - `legal_foundation_guide_agent`
 - `personalized_financial_architect_agent`
-
+- `idea_validation_engine_agent`
 ---
 
 DO NOT PROCEED WITH ANY OF THESE AGENTS IF USER PROFILE IS INCOMPLETE.
@@ -61,7 +61,7 @@ Once `startup_llm_mentor_agent` runs, synthesize outputs from tools like:
 - `market_insight_strategist_agent`: Summarize SWOT insights
 - `legal_foundation_guide_agent`: Summarize key legal recommendations
 - `personalized_financial_architect_agent`: Present tailored financial plan
-
+- `idea_validation_engine_agent`: Highlight market validation insights
 ALWAYS offer: “Would you like the full report as markdown?”
 
 ---
