@@ -1,1 +1,1 @@
-from .agent import idea_validation_engine_agent
+from .agent import current_opportunity_finder_agent
