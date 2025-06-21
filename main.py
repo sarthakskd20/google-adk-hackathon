@@ -1,14 +1,12 @@
 import asyncio
 import tkinter as tk
 from tkinter import scrolledtext, messagebox, ttk
+import sv_ttk  
 from datetime import datetime
 from typing import Dict, List
 import threading
 import webbrowser
 from PIL import Image, ImageTk
-import sv_ttk  # Modern theme for tkinter
-
-# Import the main customer service agent
 from startup_mentor.agent import startup_mentor_orchestrator
 from dotenv import load_dotenv
 from google.adk.runners import Runner
@@ -25,19 +23,17 @@ class ModernChatUI:
         self.current_session = None
         self.current_backend_session = None
         self.running = True
-        
-        # Modern color scheme (dark mode)
-        self.bg_color = "#181825"  # Darker slate
-        self.header_color = "#181825"  # Darker slate
-        self.user_msg_color = "#585b70"  # Muted lavender
-        self.agent_msg_color = "#313244"  # Dark slate
-        self.text_color = "#cdd6f4"  # Light text
-        self.accent_color = "#89b4fa"  # Soft blue
-        self.input_bg = "#45475a"  # Light slate
-        self.button_color = "#89b4fa"  # Soft blue
-        self.button_hover = "#74c7ec"  # Lighter blue
-        self.error_color = "#f38ba8"  # Soft red
-        self.success_color = "#a6e3a1"  # Soft green
+        self.bg_color = "#181825"  
+        self.header_color = "#181825"  
+        self.user_msg_color = "#585b70"  
+        self.agent_msg_color = "#313244"  
+        self.text_color = "#cdd6f4"  
+        self.accent_color = "#89b4fa"  
+        self.input_bg = "#45475a"  
+        self.button_color = "#89b4fa"  
+        self.button_hover = "#74c7ec"  
+        self.error_color = "#f38ba8"  
+        self.success_color = "#a6e3a1"  
         
         # Configure window
         self.root.geometry("1200x800")
