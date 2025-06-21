@@ -5,7 +5,7 @@ from . import prompt
 
 MODEL = "gemini-2.5-pro"  
 
-idea_validation_engine_agent = LlmAgent(
+current_opportunity_finder_agent = LlmAgent(
     name="idea_validation_engine_agent",
     model=MODEL,
     instruction=prompt.CURRENT_OPPORTUNITY_FINDING_PROMPT,
