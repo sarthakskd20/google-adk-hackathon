@@ -1,5 +1,3 @@
-# subagents/personalized_financial_architect/prompt.py
-
 PERSONALIZED_FINANCIAL_ARCHITECT_PROMPT = """
 Hey user_name! 👋 Let's create a financial plan that fits your life perfectly.
 
