@@ -48,15 +48,13 @@ def display_state(session_state: Dict[str, Any], label: str = "Current State") -
         print(f"  • Responsibilities: {format_state_field(session_state.get('user_responsibilities'))}")
         
         # Display goals and dreams
-        print("\n🎯 Goals & Dreams:")
-        print(f"  • Goals: {format_state_field(session_state.get('user_goals'))}")
+        print("\n🎯 Startup Dream:")
         print(f"  • Startup Dream: {format_state_field(session_state.get('user_startup_dream'))}")
         
         # Display availability and challenges
         print("\n⏰ Availability & Challenges:")
-        print(f"  • Available Time: {format_state_field(session_state.get('user_available_time'))}")
         print(f"  • Challenges: {format_state_field(session_state.get('user_challenges'))}")
-        print(f"  • Mindset: {format_state_field(session_state.get('user_mindset'))}")
+        print(f"  • Available Time: {format_state_field(session_state.get('user_available_time'))}")
         
         print(f"\n{'=' * 30}\n")
     except Exception as e:
@@ -159,11 +157,9 @@ def is_user_profile_complete(state: Dict[str, Any]) -> bool:
         "user_background",
         "user_financial_background",
         "user_responsibilities",
-        "user_goals",
         "user_startup_dream",
-        "user_available_time",
         "user_challenges",
-        "user_mindset",
+        "user_available_time",
     ]
     
     # Detailed check with logging
@@ -182,10 +178,8 @@ def get_missing_profile_fields(state: Dict[str, Any]) -> list:
         "user_background",
         "user_financial_background",
         "user_responsibilities",
-        "user_goals",
         "user_startup_dream",
-        "user_available_time",
         "user_challenges",
-        "user_mindset",
+        "user_available_time",
     ]
     return [field for field in required_fields if not state.get(field)]
