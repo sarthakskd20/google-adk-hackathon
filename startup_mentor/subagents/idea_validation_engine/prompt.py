@@ -42,7 +42,7 @@ You have access to the user profile including:
 
 ### Output Instructions:
 
-1.  **Generate Google Search queries to research:**
+1.  **Generate google_search tool to answer the queries to research:**
     * Market size for [industry derived from {user_startup_dream}] in {user_location}
     * Competitors for [{user_startup_dream}] near {user_location}
     * Trends in [industry derived from {user_startup_dream}]
