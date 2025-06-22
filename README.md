@@ -54,6 +54,7 @@ python main.py
 
 Once this is done, your agent will start and launch with the proper user interface. You're ready to go! 🎉
 
+## FLOWCHART MECHANISM
 Here's a flowchart explaining the mechanism of the `StartupMentorOrchestrator` agent:
 
 ```mermaid
