@@ -91,27 +91,81 @@ flowchart TD
 
 ### Flowchart Explanation:
 
-1. **Start**: The agent begins execution.
-2. **Check Profile Completeness**: 
-   - If profile is incomplete, it displays a welcome message and runs the `user_understanding_agent` to collect user information.
-   - If profile is complete, it skips to running the `startup_mentor_agent`.
-3. **User Understanding Phase**:
-   - Displays welcome message only once (`_has_displayed_welcome` flag prevents repetition).
-   - Collects user data through the sub-agent.
-   - If profile becomes complete, displays a confirmation message.
-   - If profile remains incomplete, ends the session.
-4. **Startup Mentorship Phase**:
-   - Runs the `startup_llm_mentor_agent` with access to all specialized tools/sub-agents.
-   - Processes user queries in a loop until session ends.
-5. **Session End**: Terminates when either:
-   - Profile remains incomplete after data collection attempt.
-   - User ends the conversation after mentorship phase.
+This system, called the **Startup Mentor Orchestrator**, is designed to help you build your startup. Think of it like a smart assistant that guides you step-by-step. Here's how it works, explained like a **flowchart** (a diagram showing steps and decisions):
 
-### Key Components:
-- **Orchestrator**: Controls the flow between profile collection and mentorship phases.
-- **Sub-Agents**: 
-  - `user_understanding_agent`: Handles profile completion.
-  - `startup_llm_mentor_agent`: Main LLM with access to 7 specialized tools (other sub-agents for different startup aspects).
-- **State Management**: Uses `ctx.session.state` to track profile completeness across interactions.
+---
 
-The design ensures users must complete their profile before receiving specialized startup advice, creating a structured onboarding-to-mentorship pipeline.
+### **1. Starting Your Session**
+* **Start (A)**: This is where everything begins! When you first interact with the system, it's like pressing a "start" button.
+* **New Session? (B)**: The system first checks if you've talked to it before.
+    * If **Yes** (it's your first time): It shows you a friendly **Welcome Message (C)**, something like "👋 Hi there! Let's build your startup!" To make sure it doesn't show you this message again, it secretly marks down that it `_has_displayed_welcome=True` **(D)**.
+    * If **No** (you've talked to it before): It skips the welcome message and goes straight to the next step.
+* **Invoke `user_understanding_agent` (E)**: This is like a smart helper that starts gathering your information, like your background, your startup idea, and your skills. It also makes sure the information you give is valid.
+
+---
+
+### **2. Making Sure Your Profile is Complete (The "Profile Validation Loop")**
+* **Is User Profile Complete? (F)**: The system checks if it has all the necessary information about you and your startup idea.
+    * If **No** (something's missing): It enters a special loop to get all the details.
+        1.  **Collect Missing Fields (G)**: It asks you for any information it needs, for example, "What’s your budget?"
+        2.  **Profile Valid? (H)**: After you provide the information, the system checks if it makes sense. For instance, if you type "banana" for your budget, it knows that's not right.
+            * If it's **Invalid**: It goes back to **G** and asks you to try again. It will keep doing this until you give it valid information.
+            * If it's **Valid**: Great! It moves on to confirm that your profile is complete **(K)**.
+    * If **Yes** (your profile is already complete): It skips all the asking and goes straight to confirming your profile completion **(K)**.
+
+> **Important Point**: This system is really persistent! It **won't move on** until it has all the necessary and correct information from you.
+
+---
+
+### **3. Getting Ready for Mentorship**
+* **Confirm Profile Completion (K)**: Once your profile is all set, the system tells you, "✅ Profile complete! Let’s begin mentoring."
+* **Activate `startup_llm_mentor_agent` (L)**: This is like the main brain of the system, powered by a very smart AI called **Gemini 2.5 Pro LLM**. It now takes over to guide you, using various tools to help.
+
+---
+
+### **4. Answering Your Questions (Query Handling & Sub-Agent Orchestration)**
+* **User Query Received (M)**: You ask a question, like "How do I patent my idea?"
+* **Gemini 2.5 Pro Analyzes Intent (N)**: The main brain (Gemini) figures out what kind of question you're asking – is it about legal stuff, money, or market research?
+* **Route to Specialized Sub-Agent (O)**: Based on your question, Gemini sends it to the right expert helper (we call these **sub-agents**).
+    * **Sub-Agents (P-S)**: These are like mini-experts for different topics:
+        * `startup_execution_roadmap_planner_agent`: Helps with business plans.
+        * `market_insight_strategist_agent`: Helps analyze competitors or markets.
+        * `legal_foundation_guide_agent`: Gives advice on things like patents and copyrights.
+        * (There are other experts not listed here too!)
+* **Synthesize Response (T)**: The main brain (Gemini) takes the answers from the expert helpers and puts them together into one clear, complete answer for you.
+* **Return Output to User (U)**: Finally, it sends you the answer, for example, "To patent your idea: 1. File a provisional..."
+
+---
+
+### **5. Staying Connected (Continuous Interaction)**
+* **Loop Back to (M)**: After giving you an answer, the system goes back to **(M)** and waits for your next question. This means it's always ready to help you, in an **endless loop**, as long as your session is active.
+
+---
+
+### **Why This System is So Smart**
+* **Remembers Things**: It keeps track of your profile data and whether it has shown you the welcome message.
+* **Corrects Itself**: If you enter wrong information, it will politely ask you to fix it until it's right.
+* **Picks the Right Tool**: The main brain (Gemini) is smart enough to know which expert helper (sub-agent) is best for your question. It doesn't just follow a fixed set of rules.
+* **Easy to Grow**: New expert helpers can be added or removed easily without messing up the whole system.
+
+---
+
+### **Let's See an Example**
+Imagine you:
+1.  **First time using the system**: You get the welcome message and start giving some details about your startup.
+2.  **Missing info**: The system realizes you didn't provide your budget. It asks, and you keep trying until you enter a valid number.
+3.  **Ask a question**: You then ask, "How do I enter the German market?"
+    * **Routing**: The main brain (Gemini) sends this to the `market_insight_strategist_agent` (the market expert).
+    * **Output**: The system responds with helpful advice like, "Germany requires EU compliance certificates. Steps: 1. Get CE marking..."
+
+---
+
+### **Why This System is Effective**
+* **Focuses on You**: It makes sure your profile is complete without frustrating you by simply ending the conversation.
+* **Can Handle More**: If you need advice on something new, like fundraising, a new expert helper can be easily added.
+* **Fixes Problems Automatically**: If you give bad data, it helps you correct it, meaning less hassle for you and the people running the system.
+
+This system is designed to be your reliable partner in building your startup, always ready to help and adapt to your needs!
+
+---
+Do you have any specific part of this process you'd like me to explain in more detail?
