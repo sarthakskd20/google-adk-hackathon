@@ -42,7 +42,6 @@ startup_llm_mentor_agent = LlmAgent(
         AgentTool(agent=personalized_financial_architect_agent),
         AgentTool(agent=idea_validation_engine_agent),
         AgentTool(agent=tech_stack_advisor_agent),
-        AgentTool(agent=current_opportunity_finder_agent),
     ],
 )
 
