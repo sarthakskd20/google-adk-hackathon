@@ -55,22 +55,38 @@ python main.py
 Once this is done, your agent will start and launch with the proper user interface. You're ready to go! 🎉
 
 ## FLOWCHART MECHANISM
-Here's a flowchart explaining the mechanism of the `StartupMentorOrchestrator` agent:
 
 ```mermaid
 flowchart TD
-    A[Start] --> B{Is User Profile Complete?}
-    B -->|No| C[Display Welcome Message]
-    C --> D[Run User Understanding Agent]
-    D --> E{Profile Complete?}
-    E -->|No| F[End Session]
-    E -->|Yes| G[Display Completion Message]
-    B -->|Yes| H[Run Startup Mentor Agent]
-    G --> H
-    H --> I[Process User Queries]
-    I --> J{More Queries?}
-    J -->|Yes| I
-    J -->|No| K[End Session]
+    A[Start] --> B{New Session?}
+    B -->|Yes| C[Display Welcome Message]
+    C --> D[Set _has_displayed_welcome=True]
+    D --> E[Invoke user_understanding_agent]
+    B -->|No| E
+    
+    E --> F{is_user_profile_complete?}
+    F -->|No| G[Collect Missing Fields]
+    G --> H{Profile Valid?}
+    H -->|No| G[Retry Missing Fields]
+    H -->|Yes| K[Confirm Profile Completion]
+    
+    F -->|Yes| K
+    K --> L[Activate startup_llm_mentor_agent]
+    
+    L --> M{User Query Received}
+    M --> N[Gemini 2.5 Pro Analyzes Intent]
+    N --> O[Route to Specialized Sub-Agent]
+    
+    subgraph "Sub-Agents (Tools)"
+        O --> P[startup_execution_roadmap_planner_agent]
+        O --> Q[market_insight_strategist_agent]
+        O --> R[legal_foundation_guide_agent]
+        O --> S[...3 more tools]
+    end
+    
+    P & Q & R & S --> T[Synthesize Response]
+    T --> U[Return Output to User]
+    U --> M
 ```
 
 ### Flowchart Explanation:
