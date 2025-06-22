@@ -596,11 +596,9 @@ initial_state = {
         "user_background":"",
         "user_financial_background":"",
         "user_responsibilities":"",
-        "user_goals":"",
         "user_startup_dream":"",
-        "user_available_time":"",
         "user_challenges":"",
-        "user_mindset":"",
+        "user_available_time":"",
 }
 
 def main():
