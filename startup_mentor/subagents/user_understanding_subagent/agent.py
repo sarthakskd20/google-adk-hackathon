@@ -4,7 +4,7 @@ from google.adk.sessions import InMemorySessionService, Session
 from google.adk.agents import LlmAgent
 from . import prompt
 
-MODEL = "gemini-2.5-flash"
+MODEL = "gemini-2.0-pro"
 
 # --- 1. User Name ---
 def collect_user_name(user_input: str, tool_context: ToolContext) -> dict:
