@@ -160,12 +160,30 @@ Imagine you:
 
 ---
 
-### **Why This System is Effective**
-* **Focuses on You**: It makes sure your profile is complete without frustrating you by simply ending the conversation.
-* **Can Handle More**: If you need advice on something new, like fundraising, a new expert helper can be easily added.
-* **Fixes Problems Automatically**: If you give bad data, it helps you correct it, meaning less hassle for you and the people running the system.
+The **DreamWeaver AI Startup Mentor** is designed to be your ultimate virtual guide and partner in the entrepreneurial journey. Based on the detailed explanation of its mechanism, here are its special features:
 
-This system is designed to be your reliable partner in building your startup, always ready to help and adapt to your needs!
+### **Core AI Powerhouse:**
+1.  **Gemini 2.5 Pro LLM as the Central Brain:** At its heart, DreamWeaver uses a highly advanced AI, Gemini 2.5 Pro LLM. This means it can understand complex questions, generate human-like responses, and reason across various business domains, acting as the primary intelligent interface.
+2.  **Intent-Driven Routing (Smart Delegation):** When you ask a question, the system doesn't just give a generic answer. It cleverly **analyzes the "intent"** of your query (e.g., "Is this about legal matters, marketing, or finances?"). This allows it to then send your question to the most appropriate specialized expert within its system.
+3.  **Modular Sub-Agent Architecture (Specialized Experts):** DreamWeaver isn't a single "know-it-all" AI. It's built with various "sub-agents," each acting as a mini-expert in a specific area. This includes:
+    * `startup_execution_roadmap_planner_agent` (for business planning and strategy)
+    * `market_insight_strategist_agent` (for understanding your market and competitors)
+    * `legal_foundation_guide_agent` (for legal advice, intellectual property, etc.)
+    * *(And other unlisted specialized agents, allowing for comprehensive support)*
+    This modularity means it can provide deep, focused advice on specific topics.
 
----
+### **User-Centric & Adaptive Experience:**
+4.  **Intelligent Session Initialization:** It gracefully welcomes new users with personalized messages and seamlessly integrates returning users into their ongoing journey, ensuring a smooth start every time.
+5.  **Robust Profile Validation Loop (No Data Gaps):** This is a key differentiator. DreamWeaver ensures it has all the necessary information about you and your startup. If something's missing or incorrect, it will **persistently and politely prompt you** until valid data is provided. This prevents incomplete profiles from hindering effective mentorship.
+6.  **Personalized Learning & Guidance:** By collecting detailed user profiles, DreamWeaver can tailor its advice and resources to your unique background, startup idea, and specific challenges, rather than offering generic information.
+7.  **Continuous Interaction (Always Available):** Unlike human mentors who have limited availability, DreamWeaver is designed to be an "infinite loop" that's always ready for your next question or challenge. It operates 24/7, providing on-demand advice.
+
+### **Operational Excellence & Scalability:**
+8.  **State Persistence:** The system "remembers" your progress, profile details, and previous interactions (`ctx.session.state`). This means you can pick up exactly where you left off, and the system maintains context throughout your entrepreneurial journey.
+9.  **Asynchronous Validation (Real-time Feedback):** The profile validation is non-blocking, meaning you get real-time feedback on your inputs. If you make a mistake, it immediately guides you to correct it without interrupting the flow of your interaction.
+10. **Dynamic Tool Selection (No Hardcoded Rules):** The AI intelligently decides which sub-agent (tool) to use based on your query's intent. This isn't based on rigid rules but on its advanced understanding, making it flexible and adaptable to new types of questions.
+11. **Scalable and "Plug-and-Play" Architecture:** The modular design means new sub-agents (new expert helpers for new domains like `fundraising_advisor_agent`) can be easily added or removed without disrupting the core system. This makes DreamWeaver highly scalable and future-proof.
+12. **Self-Healing and Error Reduction:** The automatic retry mechanism for invalid data inputs helps correct common user errors on the spot, reducing the need for human intervention or support.
+
+In essence, the **DreamWeaver AI Startup Mentor** combines powerful AI intelligence with a highly structured, user-friendly, and continuously available platform to provide comprehensive, personalized, and proactive guidance to aspiring and existing startup founders.
 Do you have any specific part of this process you'd like me to explain in more detail?
