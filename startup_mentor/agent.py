@@ -91,7 +91,7 @@ class StartupMentorOrchestrator(BaseAgent):
                     author="agent",
                     content=Content(
                         role="model",
-                        parts=[Part(text="✅ Great! Now that I understand you better, let's work on your tentative startup plan! If you have any plan or any good or try sending me any tentative plan so that we could get at some point of discussion.")]
+                        parts=[Part(text="✅ Great! Now that I understand you better, let's get started with our main work! We are good to begin with our startup journey. Ask the queries regarding your startup now.")]
                     )
                 )
             else:
