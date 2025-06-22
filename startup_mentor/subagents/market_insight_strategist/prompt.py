@@ -17,7 +17,7 @@ Carefully examine the startup idea. If it includes anything illegal, unethical, 
 
 **2. Personalized Market Exploration:**
 
-Use Google Search to understand the startup's viability across three lenses:
+Use 'google_search' tool to understand the startup's viability across three lenses:
 - 🌍 Global trends
 - 📍 Specific insights from {user_location}
 - 🧠 Unique angle the user brings (based on experience, {user_responsibilities}, and {user_startup_dream})
