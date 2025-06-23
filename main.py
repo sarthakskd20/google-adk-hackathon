@@ -18,7 +18,7 @@ load_dotenv()
 class ModernChatUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("Startup Mentor AI")
+        self.root.title("DreamWeaver AI")
         self.sessions: Dict[str, List[dict]] = {}
         self.current_session = None
         self.current_backend_session = None
@@ -96,7 +96,7 @@ class ModernChatUI:
         
         self.title_label = ttk.Label(
             self.logo_frame,
-            text="Startup Mentor AI",
+            text="DreamWeaver AI",
             font=('Segoe UI', 16, 'bold'),
             style='TLabel'
         )
@@ -378,7 +378,7 @@ class ModernChatUI:
                 return
         
         new_session = session_service.create_session(
-            app_name="Startup Mentor",
+            app_name="DreamWeaver AI",
             user_id="28475935",
             state=initial_state,
         )
@@ -418,7 +418,7 @@ class ModernChatUI:
         
         self.chat_display.config(state=tk.NORMAL)
         self.typing_indicator = self.chat_display.insert(
-            tk.END, "Startup Mentor is typing...\n\n", "thinking"
+            tk.END, "DreamWeaver AI is typing...\n\n", "thinking"
         )
         self.chat_display.config(state=tk.DISABLED)
         self.chat_display.see(tk.END)
@@ -597,8 +597,8 @@ initial_state = {
         "user_financial_background":"",
         "user_responsibilities":"",
         "user_startup_dream":"",
-        "user_challenges":"",
         "user_available_time":"",
+        "user_challenges":"",
 }
 
 def main():
@@ -606,16 +606,17 @@ def main():
     try:
         # Initialize components
         new_session = session_service.create_session(
-            app_name="Startup Mentor",
+            app_name="DreamWeaver AI",
             user_id="28475935",
             state=initial_state,
         )
         global runner
         runner = Runner(
             agent=startup_mentor_orchestrator,
-            app_name="Startup Mentor",
+            app_name="DreamWeaver AI",
             session_service=session_service,
         )
+        
         
         # Create Tkinter UI
         root = tk.Tk()
@@ -629,7 +630,7 @@ def main():
         ui = ModernChatUI(root)
         ui.current_backend_session = new_session
         ui.create_session(new_session.id)
-        ui.add_message("system", "Welcome to Startup Mentor AI! How can I help you with your startup journey today?")
+        ui.add_message("system", "Welcome to DreamWeaver AI! I will guide you with your startup journey. How can I help you with your startup journey today?")
         
         # Run the asyncio event loop in a separate thread
         def run_asyncio_loop(loop):
