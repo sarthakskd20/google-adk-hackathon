@@ -6,6 +6,7 @@ import logging
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+APP_NAME = "DreamWeaver AI"
 
 # ANSI color codes for terminal output
 class Colors:
@@ -47,14 +48,13 @@ def display_state(session_state: Dict[str, Any], label: str = "Current State") -
         print(f"  • Financial Background: {format_state_field(session_state.get('user_financial_background'))}")
         print(f"  • Responsibilities: {format_state_field(session_state.get('user_responsibilities'))}")
         
-        # Display goals and dreams
-        print("\n🎯 Startup Dream:")
+        print("\n🎯 Startup Dreams:")
         print(f"  • Startup Dream: {format_state_field(session_state.get('user_startup_dream'))}")
         
         # Display availability and challenges
         print("\n⏰ Availability & Challenges:")
-        print(f"  • Challenges: {format_state_field(session_state.get('user_challenges'))}")
         print(f"  • Available Time: {format_state_field(session_state.get('user_available_time'))}")
+        print(f"  • Challenges: {format_state_field(session_state.get('user_challenges'))}")
         
         print(f"\n{'=' * 30}\n")
     except Exception as e:
@@ -179,7 +179,7 @@ def get_missing_profile_fields(state: Dict[str, Any]) -> list:
         "user_financial_background",
         "user_responsibilities",
         "user_startup_dream",
-        "user_challenges",
         "user_available_time",
+        "user_challenges",
     ]
     return [field for field in required_fields if not state.get(field)]
