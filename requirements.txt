@@ -8,3 +8,6 @@ Deprecated==1.2.18
 sv-ttk==2.6.1
 pillow==11.2.1
 google-genai==1.14.0
+pydantic==2.11.4
+pydantic-settings==2.9.1
+pydantic_core==2.33.2
