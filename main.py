@@ -542,7 +542,7 @@ class ModernChatUI:
     
     def open_help(self):
         """Open help documentation"""
-        webbrowser.open("https://example.com/startup-mentor-help")
+        webbrowser.open("https://github.com/sarthakskd20/dreamweaver-ai-startup-mentor-google-adk/blob/main/README.md")
     
     async def handle_user_input(self, user_input):
         """Process user input and get agent response"""
