@@ -155,6 +155,7 @@ In essence, the **DreamWeaver AI Startup Mentor** combines powerful AI intellige
 Do you have any specific part of this process you'd like me to explain in more detail?
 
 ### Flowchart Mechanism
+```
 graph TD
   A[Startup Mentor: Greet User] --> B[SubAgent_ProfileCollector]
   B --> C{Profile Complete?}
@@ -178,3 +179,4 @@ graph TD
   R --> S[Phase 3: Growth]
   S --> T[SubAgent_SupportBot: Follow-ups]
   T -->|User Queries| P
+```
