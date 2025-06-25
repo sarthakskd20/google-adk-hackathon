@@ -154,4 +154,27 @@ The **DreamWeaver AI Startup Mentor** is designed to be your ultimate virtual gu
 In essence, the **DreamWeaver AI Startup Mentor** combines powerful AI intelligence with a highly structured, user-friendly, and continuously available platform to provide comprehensive, personalized, and proactive guidance to aspiring and existing startup founders.
 Do you have any specific part of this process you'd like me to explain in more detail?
 
-
+### Flowchart Mechanism
+graph TD
+  A[Startup Mentor: Greet User] --> B[SubAgent_ProfileCollector]
+  B --> C{Profile Complete?}
+  C -->|No| D[Loop: Request Missing/Clarify Irrelevant Data]
+  D --> B
+  C -->|Yes| E{Has Startup Plan?}
+  E -->|Yes| F[SubAgent_PlanValidator]
+  F --> G[SubAgent_SWOTAnalyzer]
+  G --> H[SubAgent_LegalAdvisor]
+  H --> I{Legal?}
+  I -->|No| J[Reject Plan + Explain]
+  I -->|Yes| K[Suggest Improvements]
+  K --> L[Revised Plan]
+  E -->|No| M[SubAgent_IdeaGenerator]
+  M --> N[Propose 3 Ideas]
+  N --> O[User Selects 1]
+  O --> G
+  L & O --> P[SubAgent_ImplementationStrategist]
+  P --> Q[Phase 1: Pre-Launch]
+  Q --> R[Phase 2: Launch]
+  R --> S[Phase 3: Growth]
+  S --> T[SubAgent_SupportBot: Follow-ups]
+  T -->|User Queries| P
