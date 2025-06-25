@@ -149,8 +149,7 @@ The **DreamWeaver AI Startup Mentor** is designed to be your ultimate virtual gu
 9.  **Asynchronous Validation (Real-time Feedback):** The profile validation is non-blocking, meaning you get real-time feedback on your inputs. If you make a mistake, it immediately guides you to correct it without interrupting the flow of your interaction.
 10. **Dynamic Tool Selection (No Hardcoded Rules):** The AI intelligently decides which sub-agent (tool) to use based on your query's intent. This isn't based on rigid rules but on its advanced understanding, making it flexible and adaptable to new types of questions.
 11. **Scalable and "Plug-and-Play" Architecture:** The modular design means new sub-agents (new expert helpers for new domains ) can be easily added or removed without disrupting the core system. This makes DreamWeaver highly scalable and future-proof.
-12. **Self-Healing and Error Reduction:** The automatic retry mechanism for invalid data inputs helps correct common user errors on the spot, reducing the need for human intervention or sup![deepseek_mermaid_20250618_010144](https://github.com/user-attachments/assets/50865189-9f43-4785-aba6-e867ae33d58b)
-port.
+12. **Self-Healing and Error Reduction:** The automatic retry mechanism for invalid data inputs helps correct common user errors on the spot, reducing the need for human intervention or support.
 
 In essence, the **DreamWeaver AI Startup Mentor** combines powerful AI intelligence with a highly structured, user-friendly, and continuously available platform to provide comprehensive, personalized, and proactive guidance to aspiring and existing startup founders.
 Do you have any specific part of this process you'd like me to explain in more detail?
