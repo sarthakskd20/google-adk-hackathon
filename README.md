@@ -154,8 +154,9 @@ The **DreamWeaver AI Startup Mentor** is designed to be your ultimate virtual gu
 In essence, the **DreamWeaver AI Startup Mentor** combines powerful AI intelligence with a highly structured, user-friendly, and continuously available platform to provide comprehensive, personalized, and proactive guidance to aspiring and existing startup founders.
 Do you have any specific part of this process you'd like me to explain in more detail?
 
-### Flowchart Mechanism
-```
+----------------------------
+## FLOWCHART MECHANISM
+```mermaid
 graph TD
   A[Startup Mentor: Greet User] --> B[SubAgent_ProfileCollector]
   B --> C{Profile Complete?}
@@ -180,3 +181,4 @@ graph TD
   S --> T[SubAgent_SupportBot: Follow-ups]
   T -->|User Queries| P
 ```
+
