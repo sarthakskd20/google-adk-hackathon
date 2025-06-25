@@ -149,34 +149,10 @@ The **DreamWeaver AI Startup Mentor** is designed to be your ultimate virtual gu
 9.  **Asynchronous Validation (Real-time Feedback):** The profile validation is non-blocking, meaning you get real-time feedback on your inputs. If you make a mistake, it immediately guides you to correct it without interrupting the flow of your interaction.
 10. **Dynamic Tool Selection (No Hardcoded Rules):** The AI intelligently decides which sub-agent (tool) to use based on your query's intent. This isn't based on rigid rules but on its advanced understanding, making it flexible and adaptable to new types of questions.
 11. **Scalable and "Plug-and-Play" Architecture:** The modular design means new sub-agents (new expert helpers for new domains ) can be easily added or removed without disrupting the core system. This makes DreamWeaver highly scalable and future-proof.
-12. **Self-Healing and Error Reduction:** The automatic retry mechanism for invalid data inputs helps correct common user errors on the spot, reducing the need for human intervention or support.
+12. **Self-Healing and Error Reduction:** The automatic retry mechanism for invalid data inputs helps correct common user errors on the spot, reducing the need for human intervention or sup![deepseek_mermaid_20250618_010144](https://github.com/user-attachments/assets/50865189-9f43-4785-aba6-e867ae33d58b)
+port.
 
 In essence, the **DreamWeaver AI Startup Mentor** combines powerful AI intelligence with a highly structured, user-friendly, and continuously available platform to provide comprehensive, personalized, and proactive guidance to aspiring and existing startup founders.
 Do you have any specific part of this process you'd like me to explain in more detail?
 
-### FLOWCHART MECHANISM 
-```
-graph TD
-  A[Startup Mentor: Greet User] --> B[SubAgent_ProfileCollector]
-  B --> C{Profile Complete?}
-  C -->|No| D[Loop: Request Missing/Clarify Irrelevant Data]
-  D --> B
-  C -->|Yes| E{Has Startup Plan?}
-  E -->|Yes| F[SubAgent_PlanValidator]
-  F --> G[SubAgent_SWOTAnalyzer]
-  G --> H[SubAgent_LegalAdvisor]
-  H --> I{Legal?}
-  I -->|No| J[Reject Plan + Explain]
-  I -->|Yes| K[Suggest Improvements]
-  K --> L[Revised Plan]
-  E -->|No| M[SubAgent_IdeaGenerator]
-  M --> N[Propose 3 Ideas]
-  N --> O[User Selects 1]
-  O --> G
-  L & O --> P[SubAgent_ImplementationStrategist]
-  P --> Q[Phase 1: Pre-Launch]
-  Q --> R[Phase 2: Launch]
-  R --> S[Phase 3: Growth]
-  S --> T[SubAgent_SupportBot: Follow-ups]
-  T -->|User Queries| P
-```
+
